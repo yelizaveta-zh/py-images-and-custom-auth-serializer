@@ -1,6 +1,15 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
+
+import uuid
+import os
+
+def movie_image_file_path(instance, filename):
+    ext = os.path.splitext(filename)[1]
+    filename = f"{slugify(instance.title)}-{uuid.uuid4()}{ext}"
+    return os.path.join("uploads/movies/", filename)
 
 
 class CinemaHall(models.Model):
